@@ -12,7 +12,7 @@ The following will pull the latest 'elttam/ctf-brianjonestown' image from Docker
 ```sh
 docker run --rm \
   --publish 80:80 \
-  --name libctfso-brianjonestown\
+  --name libctfso-brianjonestown \
   elttam/ctf-brianjonestown:latest
 ```
 

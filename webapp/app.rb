@@ -33,12 +33,13 @@ end
 post '/fan/new/?' do
   #session[:name] = params[:name]
   session.update(params)
-  session[:alerts] = [Alert.new('warning', 'WIP'), Alert.new('info', "session #{session.class} = #{session.inspect}"), Alert.new('info', "params #{params.class} = #{params}")]
+  #session[:alerts] = [Alert.new('warning', 'WIP'), Alert.new('info', "session #{session.class} = #{session.inspect}"), Alert.new('info', "params #{params.class} = #{params}")]
+  session[:alerts] = [Alert.new('info', 'Welcome')]
   redirect to('/')
 end
 
 get '/logout' do
-  session.delete(:identity)
+  session.delete(:name)
   session[:alerts] = [Alert.new('info', 'You have been logged out')]
   redirect to('/')
 end
@@ -48,7 +49,7 @@ get '/alerts' do
 end
 
 not_found do
-  session[:alerts] = [Alert.new('danager', 'These are not the droids you are looking for')]
+  session[:alerts] = [Alert.new('danger', 'These are not the droids you are looking for')]
   slim :index
 end
 
@@ -63,8 +64,8 @@ html
   body
     .jumbotron class="text-center"
       h1 BJTM Fan Club
-    - if @alerts
-      - @alerts.each do |item|
+    - if session[:alerts]
+      - session[:alerts].each do |item|
         .alert class="alert-#{item.level}" #{item.message}
     == yield
 
